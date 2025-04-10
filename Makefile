@@ -13,8 +13,8 @@ lcl-pm-frontend-build: export PORT=3035
 lcl-pm-frontend-build: export STAGE=lcl
 lcl-pm-frontend-build:
 	echo ${PROJECT_FOLDER}
-	cp lcl/lcl.env ${PROJECT_FOLDER}/pm-frontend/lcl.env
-	${PROJECT_FOLDER}/pm-frontend/docker-build.sh
+	cp lcl/lcl.env ${PROJECT_FOLDER}pm-frontend/lcl.env
+	${PROJECT_FOLDER}pm-frontend/docker-build.sh
 
 lcl-pm-backend-build: export VERSION=${PM_LCL_VERSION}
 lcl-pm-backend-build: export PLATFORM=linux/arm64
@@ -33,7 +33,8 @@ lcl-deploy-all:
 	docker network inspect npm_default >/dev/null 2>&1 || docker network create -d bridge npm_default
 	docker compose -f lcl/docker-compose.lcl.yml up -d
 
-lcl-frontend: lcl-pm-frontend-build lcl-deploy-frontend
+lcl-frontend: lcl-pm-frontend-build
+#lcl-frontend: lcl-pm-frontend-build lcl-deploy-frontend
 lcl-backend: lcl-pm-backend-build lcl-deploy-backend
 lcl-all: lcl-build-all lcl-deploy-all
 
