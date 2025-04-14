@@ -25,3 +25,5 @@ Een periode moet worden afgesloten om de periode te evalueren, de saldi weer rec
 
 #### Initialisatie script
 Een script om een initiele database vulling te maken waardoor de app (functioneel) testbaar wordt.
+
+#### Signalen
