@@ -27,3 +27,4 @@ Een periode moet worden afgesloten om de periode te evalueren, de saldi weer rec
 Een script om een initiele database vulling te maken waardoor de app (functioneel) testbaar wordt.
 
 #### Signalen
+Een signaal is een melding aan de gebruiker dat er iets wetenswaardigs is gebeurd, bijvoorbeeld dat een nieuwe periode is gestart en de oude kan worden afgesloten, of bijvoorbeeld dat het maandbudget is overschreden; in eerste instantie het mechanisme inbouwen, zodanig dat het eenvoudig is om nieuwe signalen toe te voegen.
