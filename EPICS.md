@@ -1,0 +1,27 @@
+# Epics
+
+Onderstaand een lijst met Epics voor de PlusMin app.
+
+#### Internatinalisation
+In de hele stack (pm-frontend, pm-backend en pm-database) alle teksten, die aan de gebruiker worden getoond,vertaalbaar maken.
+
+#### Project inrichting
+Een tool en structuur definiëren om de ontwikkel workflows in te richten; issues onderverdelen in (bijvoorbeeld) epics, stories, bugs en tasks, inclusief de onderlinge samenhang; issues kunnen toewijzen en de voortgang monitiren.
+
+#### Authenticatie
+Gebruiker authenticatie mogelijkmaken zonder gebruik te maken van Asgardeo, bijvoorbeeld door een eeuwig durend token en een eigen issuer-url (zie application.yml in pm-backend).
+
+#### CI/CD en tests opzetten
+Zowel voor pm-frontend als pm-backend tests opzetten en invullen die in een CI/CD pipeline worden uitgevoerd.
+
+#### Reserveringen aka spaarpotjes
+Reserveringen inbouwen (zowel pm-database, pm-backend als pm-frontend). Een reserving is een potje dat opzij wordt gezet om een grote aanschaf in de toekomst te kunnen betalen waarvoor maandelijk geld opzij wordt gezet.
+
+#### Schermen om de app te configureren voor een gebruiker
+Opzetten van schermen om rekeningen, budgetten, aflossingen en tzt reserveringen (aka spaarpotjes) in te kunnen richten en wijzigen voor een gebruiker.
+
+#### Periode afsluiten
+Een periode moet worden afgesloten om de periode te evalueren, de saldi weer recht te zetten en herinrichting te doen op punten die niet goed gingen (budgetten verplaatsen, etc.).
+
+#### Initialisatie script
+Een script om een initiele database vulling te maken waardoor de app (functioneel) testbaar wordt.
