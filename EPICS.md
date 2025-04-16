@@ -21,7 +21,7 @@ Een tool en structuur definiëren om de ontwikkel workflows in te richten; issue
 Gebruiker authenticatie mogelijkmaken zonder gebruik te maken van Asgardeo, bijvoorbeeld door een eeuwig durend token en een eigen issuer-url (zie application.yml in pm-backend).
 
 #### Authenticatie (2)
-Gebruiker koppelen op basis van de sub in de JWT, en dus geen email (nu als username) mee sturen; hiermee wordt een volledige ontkoppeling van persoongegevens bereikt.
+Gebruiker koppelen op basis van de `sub` in de JWT, en dus geen email (nu als username) mee sturen; hiermee wordt een volledige ontkoppeling van persoongegevens bereikt.
 
 #### CI/CD en tests opzetten
 Zowel voor pm-frontend als pm-backend tests opzetten en invullen die in een CI/CD pipeline worden uitgevoerd.
