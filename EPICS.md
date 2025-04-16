@@ -1,6 +1,15 @@
 # Epics
 
-Onderstaand een lijst met Epics voor de PlusMin app.
+Onderstaand een (niet geprioriteerde) lijst met Epics voor de PlusMin app.
+
+#### Ontkoppelen van de hoofdmodules
+Kern van de app zijn 3 hoofdmodules: budgetteren, aflossen en sparen; deze zijn nu alle drie afhankelijk van budgetteren maar moeten los van elkaar kunnen werken.
+
+#### AI voor toewijzen potjes en budgetten
+AI een voorstel laten doen voor het toewijzen van een betaling aan een potje/budget, bijvoorkeur helemaal in de front end
+
+#### Papieren huishoudboekje OCRen
+Op basis van een foto van een pagina van een huishoudboekje betalingen registreren.
 
 #### Internatinalisation
 In de hele stack (pm-frontend, pm-backend en pm-database) alle teksten, die aan de gebruiker worden getoond,vertaalbaar maken.
@@ -8,8 +17,11 @@ In de hele stack (pm-frontend, pm-backend en pm-database) alle teksten, die aan 
 #### Project inrichting
 Een tool en structuur definiëren om de ontwikkel workflows in te richten; issues onderverdelen in (bijvoorbeeld) epics, stories, bugs en tasks, inclusief de onderlinge samenhang; issues kunnen toewijzen en de voortgang monitiren.
 
-#### Authenticatie
+#### Authenticatie (1)
 Gebruiker authenticatie mogelijkmaken zonder gebruik te maken van Asgardeo, bijvoorbeeld door een eeuwig durend token en een eigen issuer-url (zie application.yml in pm-backend).
+
+#### Authenticatie (2)
+Gebruiker koppelen op basis van de sub in de JWT, en dus geen email (nu als username) mee sturen; hiermee wordt een volledige ontkoppeling van persoongegevens bereikt.
 
 #### CI/CD en tests opzetten
 Zowel voor pm-frontend als pm-backend tests opzetten en invullen die in een CI/CD pipeline worden uitgevoerd.
