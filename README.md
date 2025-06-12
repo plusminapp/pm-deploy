@@ -1,64 +1,81 @@
 # `PlusMin`
 
-**Versie**: 23 oktober 2024  
+**Versie**: 12 juni 2025  
 **Auteur**: Ruud van Vliet
 
 ## Overzicht
 
-`PlusMin` is een open-source project gericht op de ondersteuning van administratiemaatjes (zie bijvoorbeeld https://lsta.nl/, https://www.humanitas.nl/thuisadministratie/ of https://schuldhulpmaatje.nl/) bij het begeleiden van hulpvragers. 
+Voor functionele informatie over dit project: zie https://plusmingereedschapskist.nl.
 
-`PlusMin` is: Inkomsten en uitgaven, Overschot/buffer en tekort, Boekhouden voor iedereen, Niet digi en niet theoretisch.
+Deze README richt zich op het uitleggen hoe de applicatie is opgebouwd en (lokaal) kan worden gebouwd/gestart.
 
-Dit gereedschap helpt administratiemaatjes en hulpvragers bij het budgetteren, monitoren van inkomsten en uitgaven, en het voorkomen van onverwachte financiële problemen. Het doel is een laagdrempelige digitale oplossing te bieden, in combintaie met een o.a. een 'papieren' versie, die eenvoudig te gebruiken is voor hulpvragers met beperkte digitale vaardigheden en minimale apparatuur, zoals een alleen mobiele telefoon.
+## Structuur
 
-Het administratiemaatjes krijgt toegang, ook van huis uit, tot de gegevens die de hulpvrager wil delen, zonder dat er toegang tot een bankrekening wordt gegeven, en zonder dat die gegevens mee naar huis worden genomen.
+Het project omvat 6 repositories:
 
-De app wordt onderdeel van een pakket met onder andere een papieren versie, checklists, opleidingen, etc.
+- pm-frontend: een vite/React frontend
+- pm-backend: een Spring Boot/Kotlin/Maven backend die op /api/v1 een API ontsluit, die op /api/v1/swagger-ui/index.html
+  kan worden bekeken
+- pm-database: een Postgresql database
+- pm-deploy: dit project dat het builden en starten van de vorige 3 projecten faciliteert
 
-## Doelgroep
+Twee niet noodzakelijke repositories:
 
-In eerste instantie ontwikkel ik de app voor mezelf, maar in de toekomst is het bedoeld voor administratiemaatjes en hulpvragers in het algemeen. 
+- pm-docs: de doumentatie die op https://plusmingereedschapskist.nl wordt ontsloten
+- camt053parser: is een apart deelproject om `camt053` betaalbestanden in te kunnen lezen; het is nu '
+  uitgecommentarieerd';
 
-## Probleemstelling
+De repositories zijn geplubiceerd op https://github.com/orgs/plusminapp/repositories
 
-Een deel van de mensen met geldzorgen heeft weinig digitale vaardigheden en communiceert veel via een mobiele telefoon (weinig overzicht, veel door elkaar). In de praktijk blijkt dat bestaande hulpmiddelen voor schuldhulpveraflossing niet voldoen aan de behoeften van administratiemaatjes en hulpvragers. Er is behoefte aan een eenvoudige, toegankelijke oplossing die:
-- Eenvoudig inkomsten en uitgaven kan registreren
-- Budgettering ondersteunt en de voortgang (uitputting) van budgetten bewaakt
-- Heldere signalen geeft bij afwijkingen van de uitputting ten opzichte van het budget
-- Naadloos aansluit op het pakket van checklists, opleidingen, etc. 
+## Vereisten
 
-Hulpvragers zijn vaak minder digitaal vaardig en hebben niet altijd toegang tot moderne digitale hulpmiddelen. `PlusMin` moet daarom makkelijk bruikbaar zijn op mobiele telefoons, het meest gebruikte apparaat door hulpvragers.
+- Java 17
+- Maven 3.9.9
+- docker 28.1.1 (inclusief docker compose)
+- Visual Studio Code met de Dev Containers extensie
+- make GNU Make 3.81
 
-## Functies
 
-Het gereedschap biedt ondersteuning voor de volgende functionaliteiten:
-
-1. **Budgetcategorieën opstellen**  
-   hulpvragers en administratiemaatjes kunnen samen duidelijke categorieën bepalen waarin inkomsten en uitgaven worden onderverdeeld.
-
-2. **Budgettering per periode**  
-   Per categorie kan een budget worden vastgesteld voor een bepaalde periode (week, maand, kwartaal of jaar), met een verwachte uitputtingssnelheid.
-
-3. **Inkomsten en uitgaven registreren**  
-   hulpvragers kunnen eenvoudig betalingen registreren en categoriseren. Er is een toekomstig plan om een koppeling met bankgegevens te integreren.
-
-4. **Visuele feedback**  
-   Eenvoudige visuele signalen (zoals een stoplichtsysteem) geven aan of de registratie up-to-date is, of betalingen correct zijn, en of het budget volgens verwachting wordt uitgeput.
-
-5. **Afwijkingen signaleren**  
-   Als het werkelijke uitgavenpatroon te ver afwijkt van het verwachte patroon, kan het systeem waarschuwen en eventueel een melding sturen naar het administratiemaatje, mits de hulpvrager daar toestemming voor geeft.
+- een plusmin account bij Asgardeo; vraag hier naar bij Ruud van Vliet.
 
 ## Installatie
 
-Instructies voor installatie en gebruik volgen nog. De eerste versie zal gericht zijn op webapp, mobiel voor de functies voor de hulpvrager en op een 'groot' scherm voor het administratiemaatje.
+1. maak een folder waarin je de vier repositories wilt plaatsen, bijvoorbeeld `~/plusminapp`
+2. clone de repositories in deze folder:
+   ```bash
+    git clone git@github.com:plusminapp/pm-database.git
+    git clone git@github.com:plusminapp/pm-backend.git
+    git clone git@github.com:plusminapp/pm-frontend.git
+    git clone git@github.com:plusminapp/pm-deploy.git
+   ```
+3. open de folder pm-deploy:
+    ```bash
+    make lcl-all
+    ```
+4. open http://localhost:3035/ in de browser; dit is de frontend van PlusMin
 
-## Bijdragen
+## Initialisatie van de database
+Zodra je met je Asgardeo account inlogt in de frontend, wordt een gebruiker (met 2 periodes, zie de database) aangemaakt.
 
-Dit project staat open voor bijdragen. Suggesties, bug reports, en pull requests zijn van harte welkom.
+In de folder `~/plusminapp/pm-backend/src/test/resources/new-model` is een bestand `0-gebruikers.sql` aanwezig. Deze sql zorgt ervoor dat de gebruiker de `ROLE_COORDINATOR` krijgt waardoor die (o.a.) gebruikers mag aanpassen.
 
-## Licentie
+In dezefde folder staat een bestand `1-gebruiker.json`; de json spreekt voor zich; de gebruiker wordt gematched op het email adres. De json **moet worden aangepast** en aangeboden via de swagger UI van de backend (zie de volgende paragraaf).
 
-Dit project is gelicenseerd onder de MIT-licentie. Zie de [LICENSE](https://www.mit.edu/~amini/LICENSE.md)  voor meer informatie.
+Daarnaast staat er ook een bestand `2-rekeningen.json`. Dit bestand kan worden aangeboden via de swagger UI van de backend met de `POST /rekening/hulpvrager/{hulpvragerId}` in de rekening controller. De `hulpvragerId` is de database-id van de gebruiker en zal uit de database moeten worden opgehaald (of uit een XHR call via de developpers tools in de browser). In de frontend op de `/profiel` pagina kun je het rekeningschema onder `Potjes en bijbehorende budgetten` bekijken.
+
+Betalingen kunnen daarna handmatig worden ingevoerd via de kasboekpagina (met de grote + knop rechtsonderin) in de frontend (http://localhost:3035/kasboek). Betalingen kunnen ook met de OCR (Optical Character Recognition, de knop met de camera bovenin de kasboek pagina) van een schermafbeelding van de bank app op je telefoon worden aangemaakt. 
+
+Om bulk betalingen toe te voegen kan het `3-betalingen.json` bestand als inspiratie dienen. Dit bestand kan worden aangeboden via de swagger UI van de backend met de `POST /betalingen/hulpvrager/{hulpvragerId}/list` in de betalingen controller.  
 
 
+## Gebruik van de Swagger UI
+Om de Swgagger UI te gebruiken, moet de gebruiker zijn ingelogd:
+1. ga naar http://localhost:3035 (dit is de frontend) met de dev tools in de browser geopend
+2. log in met je Asgardeo account
+3. ga in de dev tools van de browser naar het tabblad 'Network'; klik op een XHR call; open de `Headers` tab en zoek naar de `Authorization` header; kopieer de waarde van deze header; plak het in een textbestand en haal de text `Bearer` (inclusief de spatie) weg; kopieer nu de rest van het token (op jwt.io kun je het token trouwens bekijken). 
+4. ga naar http://localhost:3045/api/v1/swagger-ui/index.html. open met de `Authorize` knop de dialoog en plak het token. Klik op `Authorize` en daarna op `Close`.
+5. Nu kun je de API gebruiken. Een test is bijvoorbeeld de `GET /gebruiker/zelf` in de gebruiker-controller (die heeft geen parameters of body nodig).
 
+
+## Front end ontwikkelen in Visual Studio Code (met dank aan Vincent Olde Scholtenhuis van ilionx)
+In het frontend project is een `.devcontainer` folder aanwezig. Als je de Dev Containers extensie van Visual Studio Code hebt geinstalleerd kun je met <shift>-<command> P de command palette openen en `Dev Containers: Reopen in Container` kiezen. Visual Studio Code zal nu de container opstarten en de frontend daarin openen. Met `npm run dev` kun je de frontend starten. De frontend is dan bereikbaar op http://localhost:5173/.
