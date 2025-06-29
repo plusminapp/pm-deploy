@@ -57,15 +57,17 @@ De repositories zijn geplubiceerd op https://github.com/orgs/plusminapp/reposito
 ## Initialisatie van de database
 Zodra je met je Asgardeo account inlogt in de frontend, wordt een gebruiker (met 2 periodes, zie de database) aangemaakt.
 
-In de folder `~/plusminapp/pm-backend/src/test/resources/new-model` is een bestand `0-gebruikers.sql` aanwezig. Deze sql zorgt ervoor dat de gebruiker de `ROLE_COORDINATOR` krijgt waardoor die (o.a.) gebruikers mag aanpassen.
+In de folder `~/plusminapp/pm-backend/src/test/resources/alex` is een bestand `0-gebruikers.sql` aanwezig. Deze sql zorgt ervoor dat de gebruiker de `ROLE_COORDINATOR` krijgt waardoor die (o.a.) gebruikers mag aanpassen.
 
-In dezefde folder staat een bestand `1-gebruiker.json`; de json spreekt voor zich; de gebruiker wordt gematched op het email adres. De json **moet worden aangepast** en aangeboden via de swagger UI van de backend (zie de volgende paragraaf).
+In dezefde folder staat een bestand `1-gebruiker.json`; de json spreekt voor zich; de gebruiker wordt gematched op het email adres. De json **moet worden aangepast** en aangeboden via de swagger UI van de backend (zie de volgende paragraaf). het voegt automatisch periodes toe vanaf de periode januari/februari 2025.
 
 Daarnaast staat er ook een bestand `2-rekeningen.json`. Dit bestand kan worden aangeboden via de swagger UI van de backend met de `POST /rekening/hulpvrager/{hulpvragerId}` in de rekening controller. De `hulpvragerId` is de database-id van de gebruiker en zal uit de database moeten worden opgehaald (of uit een XHR call via de developpers tools in de browser). In de frontend op de `/profiel` pagina kun je het rekeningschema onder `Potjes en bijbehorende budgetten` bekijken.
 
 Betalingen kunnen daarna handmatig worden ingevoerd via de kasboekpagina (met de grote + knop rechtsonderin) in de frontend (http://localhost:3035/kasboek). Betalingen kunnen ook met de OCR (Optical Character Recognition, de knop met de camera bovenin de kasboek pagina) van een schermafbeelding van de bank app op je telefoon worden aangemaakt. 
 
-Om bulk betalingen toe te voegen kan het `3-betalingen.json` bestand als inspiratie dienen. Dit bestand kan worden aangeboden via de swagger UI van de backend met de `POST /betalingen/hulpvrager/{hulpvragerId}/list` in de betalingen controller.  
+Om bulk betalingen toe te voegen kan het `3-betalingen.json` bestand als inspiratie dienen. Dit bestand kan worden aangeboden via de swagger UI van de backend met de `POST /betalingen/hulpvrager/{hulpvragerId}/list` in de betalingen controller. Het voegt betalingen toe voor de periode januari/februari 2025 
+
+Om de betalingingen naar de overige periodes te kopiëren kan de `PUT /demo/hulpvrager/{hulpvragerId}/configureer` worden gebruikt. Hierdoor worden alle periodes gevuld met betalingen en vervolgens elke nacht de betalingen voor 'vandaag' naar de huidige periode gekopieerd. Dit is handig om de app te kunnen demo-en en testen. 
 
 
 ## Gebruik van de Swagger UI
