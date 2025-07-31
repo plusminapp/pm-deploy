@@ -48,7 +48,8 @@ De repositories zijn geplubiceerd op https://github.com/orgs/plusminapp/reposito
     git clone git@github.com:plusminapp/pm-frontend.git
     git clone git@github.com:plusminapp/pm-deploy.git
    ```
-3. open de folder pm-deploy:
+3. kopieer `lcl/lcl.env naar dev.`
+4. open de folder pm-deploy:
     ```bash
     make lcl-all
     ```
