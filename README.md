@@ -58,7 +58,7 @@ De repositories zijn geplubiceerd op https://github.com/orgs/plusminapp/reposito
 ## Initialisatie van de database
 Zodra je met je Asgardeo account inlogt in de frontend, wordt een gebruiker (met 2 periodes, zie de database) aangemaakt.
 
-In de folder `~/plusminapp/pm-backend/src/test/resources/alex` is een bestand `0-gebruikers.sql` aanwezig. Deze sql zorgt ervoor dat de gebruiker de `ROLE_COORDINATOR` krijgt waardoor die (o.a.) gebruikers mag aanpassen.
+In de folder `~/plusminapp/pm-backend/src/test/resources/alex` is een bestand `0-gebruiker-coordinator.sql` aanwezig. Deze sql zorgt ervoor dat de gebruiker de `ROLE_COORDINATOR` krijgt waardoor die (o.a.) gebruikers mag aanpassen.
 
 In dezefde folder staat een bestand `1-gebruiker.json`; de json spreekt voor zich; de gebruiker wordt gematched op het email adres. De json **moet worden aangepast** en aangeboden via de swagger UI van de backend (zie de volgende paragraaf). het voegt automatisch periodes toe vanaf de periode januari/februari 2025.
 
@@ -70,6 +70,7 @@ Om bulk betalingen toe te voegen kan het `3-betalingen.json` bestand als inspira
 
 Om de betalingingen naar de overige periodes te kopiëren kan de `PUT /demo/hulpvrager/{hulpvragerId}/configureer` worden gebruikt. Hierdoor worden alle periodes gevuld met betalingen en vervolgens elke nacht de betalingen voor 'vandaag' naar de huidige periode gekopieerd. Dit is handig om de app te kunnen demo-en en testen. 
 
+De Reserveringsfunctionaliteits is nog niet af maar reservereringen kunnen worden toegevoegd met de `POST /reserveringen/hulpvrager/{hulpvragerId}/periodes`
 
 ## Gebruik van de Swagger UI
 Om de Swgagger UI te gebruiken, moet de gebruiker zijn ingelogd:
