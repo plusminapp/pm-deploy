@@ -32,7 +32,7 @@ lcl-remove-all-incl-database:
 	docker compose -f lcl/docker-compose.lcl.yml down -v
 	docker rmi plusmin/pm-database:${PM_LCL_VERSION}
 
-lcl-deploy-all:
+lcl-deploy-frontend lcl-deploy-backend lcl-deploy-all:
 	docker compose -f lcl/docker-compose.lcl.yml down
 	docker network inspect npm_default >/dev/null 2>&1 || docker network create -d bridge npm_default
 	docker compose -f lcl/docker-compose.lcl.yml up -d
