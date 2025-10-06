@@ -30,7 +30,7 @@ lcl-build-all: lcl-pm-frontend-build lcl-pm-backend-build lcl-pm-database-build
 
 lcl-remove-all-incl-database:
 	docker compose -f lcl/docker-compose.lcl.yml down -v
-	docker rmi pm-database
+	docker rmi plusmin/pm-database:${PM_LCL_VERSION}
 
 lcl-deploy-frontend:
 lcl-deploy-all:
