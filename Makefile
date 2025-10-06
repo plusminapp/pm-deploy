@@ -28,6 +28,10 @@ lcl-pm-database-build:
 
 lcl-build-all: lcl-pm-frontend-build lcl-pm-backend-build lcl-pm-database-build
 
+lcl-remove-all-incl-database:
+	docker compose -f lcl/docker-compose.lcl.yml down -v
+	docker rmi pm-database
+
 lcl-deploy-frontend:
 lcl-deploy-all:
 	docker network inspect npm_default >/dev/null 2>&1 || docker network create -d bridge npm_default
