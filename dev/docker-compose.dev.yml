@@ -42,7 +42,7 @@ services:
       - POSTGRES_PASSWORD=pm
       - POSTGRES_DB=pm
     volumes:
-      - pm-database-dev:/bitnami/postgresql/data
+      - pm-database-dev:/var/lib/postgresql/data
     networks:
       - npm_default
     ports:

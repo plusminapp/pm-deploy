@@ -28,8 +28,15 @@ lcl-pm-database-build:
 
 lcl-build-all: lcl-pm-frontend-build lcl-pm-backend-build lcl-pm-database-build
 
-lcl-deploy-frontend:
-lcl-deploy-all:
+lcl-remove-all-incl-database:
+	docker compose -f lcl/docker-compose.lcl.yml down -v
+	@if docker image inspect plusmin/pm-database:${PM_LCL_VERSION} >/dev/null 2>&1; then \
+	  docker rmi plusmin/pm-database:${PM_LCL_VERSION}; \
+	fi
+	${MAKE} lcl-pm-database-build
+
+lcl-deploy-frontend lcl-deploy-backend lcl-deploy-all:
+	docker compose -f lcl/docker-compose.lcl.yml down
 	docker network inspect npm_default >/dev/null 2>&1 || docker network create -d bridge npm_default
 	docker compose -f lcl/docker-compose.lcl.yml up -d
 
