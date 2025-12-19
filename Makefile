@@ -6,23 +6,25 @@ include dev/dev.env
 include stg/stg.env
 export
 
+export LCL_PLATFORM=linux/$(shell uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')
+
 # local lcl
 lcl-pm-frontend-build: export VERSION=${PM_LCL_VERSION}
-lcl-pm-frontend-build: export PLATFORM=linux/arm64
+lcl-pm-frontend-build: export PLATFORM=${LCL_PLATFORM}
 lcl-pm-frontend-build: export PORT=3035
 lcl-pm-frontend-build: export STAGE=lcl
 lcl-pm-frontend-build:
-	echo ${PROJECT_FOLDER}
+	echo folder: ${PROJECT_FOLDER} platform: ${LCL_PLATFORM} version: ${VERSION}
 	cp lcl/lcl.env ${PROJECT_FOLDER}/pm-frontend/lcl.env
 	${PROJECT_FOLDER}/pm-frontend/docker-build.sh
 
 lcl-pm-backend-build: export VERSION=${PM_LCL_VERSION}
-lcl-pm-backend-build: export PLATFORM=linux/arm64
+lcl-pm-backend-build: export PLATFORM=${LCL_PLATFORM}
 lcl-pm-backend-build:
 	${PROJECT_FOLDER}/pm-backend/docker-build.sh
 
 lcl-pm-database-build: export VERSION=${PM_LCL_VERSION}
-lcl-pm-database-build: export PLATFORM=linux/arm64
+lcl-pm-database-build: export PLATFORM=${LCL_PLATFORM}
 lcl-pm-database-build:
 	${PROJECT_FOLDER}/pm-database/docker-build.sh
 
@@ -30,18 +32,14 @@ lcl-build-all: lcl-pm-frontend-build lcl-pm-backend-build lcl-pm-database-build
 
 lcl-remove-all-incl-database:
 	docker compose -f lcl/docker-compose.lcl.yml down -v
-	@if docker image inspect plusmin/pm-database:${PM_LCL_VERSION} >/dev/null 2>&1; then \
-	  docker rmi plusmin/pm-database:${PM_LCL_VERSION}; \
-	fi
-	${MAKE} lcl-pm-database-build
 
-lcl-deploy-frontend lcl-deploy-backend lcl-deploy-all:
+lcl-deploy-all:
 	docker compose -f lcl/docker-compose.lcl.yml down
 	docker network inspect npm_default >/dev/null 2>&1 || docker network create -d bridge npm_default
 	docker compose -f lcl/docker-compose.lcl.yml up -d
 
-lcl-frontend: lcl-pm-frontend-build lcl-deploy-frontend
-lcl-backend: lcl-pm-backend-build lcl-deploy-backend
+lcl-frontend: lcl-pm-frontend-build lcl-deploy-all
+lcl-backend: lcl-pm-backend-build lcl-deploy-all
 lcl-all: lcl-build-all lcl-deploy-all
 
 # development dev
