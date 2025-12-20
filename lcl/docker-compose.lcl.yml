@@ -1,5 +1,6 @@
-services:
+name: pm-app-lcl
 
+services:
   pm-frontend-lcl:
     image: plusmin/pm-frontend:${PM_LCL_VERSION}
     container_name: pm-frontend-lcl

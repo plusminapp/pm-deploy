@@ -23,6 +23,11 @@ lcl-pm-backend-build: export PLATFORM=${LCL_PLATFORM}
 lcl-pm-backend-build:
 	${PROJECT_FOLDER}/pm-backend/build-docker.sh
 
+lcl-pm-openapi-build: export VERSION=${PM_LCL_VERSION}
+lcl-pm-openapi-build: export PLATFORM=${LCL_PLATFORM}
+lcl-pm-openapi-build:
+	${PROJECT_FOLDER}/pm-backend/build-openapi.sh
+
 lcl-pm-database-build: export VERSION=${PM_LCL_VERSION}
 lcl-pm-database-build: export PLATFORM=${LCL_PLATFORM}
 lcl-pm-database-build:
@@ -37,6 +42,19 @@ lcl-deploy-all:
 	docker compose -f lcl/docker-compose.lcl.yml down
 	docker network inspect npm_default >/dev/null 2>&1 || docker network create -d bridge npm_default
 	docker compose -f lcl/docker-compose.lcl.yml up -d
+	@echo "Waiting for pm-backend-lcl to accept connections..."
+	@for i in $$(seq 1 30); do \
+		printf "\rChecking pm-backend-lcl... attempt $$i/30"; \
+		if docker exec pm-backend-lcl sh -c 'curl localhost:3045/api/v1/v3/api-docs 2>/dev/null' >/dev/null 2>&1; then \
+			printf "\npm-backend-lcl is ready! (took $$(($$i)) seconds)\n"; \
+			break; \
+		elif [ $$i -eq 30 ]; then \
+			printf "\nWarning: pm-backend-lcl not responding after 30 seconds\n"; \
+		else \
+			sleep 1; \
+		fi; \
+	done
+	$(MAKE) lcl-pm-openapi-build
 
 lcl-frontend: lcl-pm-frontend-build lcl-deploy-all
 lcl-backend: lcl-pm-backend-build lcl-deploy-all
@@ -44,7 +62,6 @@ lcl-all: lcl-build-all lcl-deploy-all
 
 # development dev
 dev-pm-frontend-build: export VERSION=${PM_DEV_VERSION}
-dev-pm-frontend-build: export BUILD_PLATFORM=${LCL_PLATFORM}
 dev-pm-frontend-build: export PLATFORM=linux/amd64
 dev-pm-frontend-build: export PORT=3035
 dev-pm-frontend-build: export STAGE=dev
