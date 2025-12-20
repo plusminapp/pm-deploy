@@ -16,17 +16,17 @@ lcl-pm-frontend-build: export STAGE=lcl
 lcl-pm-frontend-build:
 	echo folder: ${PROJECT_FOLDER} platform: ${LCL_PLATFORM} version: ${VERSION}
 	cp lcl/lcl.env ${PROJECT_FOLDER}/pm-frontend/lcl.env
-	${PROJECT_FOLDER}/pm-frontend/docker-build.sh
+	${PROJECT_FOLDER}/pm-frontend/build-docker.sh
 
 lcl-pm-backend-build: export VERSION=${PM_LCL_VERSION}
 lcl-pm-backend-build: export PLATFORM=${LCL_PLATFORM}
 lcl-pm-backend-build:
-	${PROJECT_FOLDER}/pm-backend/docker-build.sh
+	${PROJECT_FOLDER}/pm-backend/build-docker.sh
 
 lcl-pm-database-build: export VERSION=${PM_LCL_VERSION}
 lcl-pm-database-build: export PLATFORM=${LCL_PLATFORM}
 lcl-pm-database-build:
-	${PROJECT_FOLDER}/pm-database/docker-build.sh
+	${PROJECT_FOLDER}/pm-database/build-docker.sh
 
 lcl-build-all: lcl-pm-frontend-build lcl-pm-backend-build lcl-pm-database-build
 
@@ -44,22 +44,23 @@ lcl-all: lcl-build-all lcl-deploy-all
 
 # development dev
 dev-pm-frontend-build: export VERSION=${PM_DEV_VERSION}
+dev-pm-frontend-build: export BUILD_PLATFORM=${LCL_PLATFORM}
 dev-pm-frontend-build: export PLATFORM=linux/amd64
 dev-pm-frontend-build: export PORT=3035
 dev-pm-frontend-build: export STAGE=dev
 dev-pm-frontend-build:
 	cp dev/dev.env ${PROJECT_FOLDER}/pm-frontend/dev.env
-	${PROJECT_FOLDER}/pm-frontend/docker-build.sh
+	${PROJECT_FOLDER}/pm-frontend/build-docker.sh
 
 dev-pm-backend-build: export VERSION=${PM_DEV_VERSION}
 dev-pm-backend-build: export PLATFORM=linux/amd64
 dev-pm-backend-build:
-	${PROJECT_FOLDER}/pm-backend/docker-build.sh
+	${PROJECT_FOLDER}/pm-backend/build-docker.sh
 
 dev-pm-database-build: export VERSION=${PM_DEV_VERSION}
 dev-pm-database-build: export PLATFORM=linux/amd64
 dev-pm-database-build:
-	${PROJECT_FOLDER}/pm-database/docker-build.sh
+	${PROJECT_FOLDER}/pm-database/build-docker.sh
 
 dev-build-all: dev-pm-frontend-build dev-pm-backend-build dev-pm-database-build
 
@@ -92,17 +93,17 @@ stg-pm-frontend-build: export PORT=3030
 stg-pm-frontend-build: export STAGE=stg
 stg-pm-frontend-build:
 	cp stg/stg.env ${PROJECT_FOLDER}/pm-frontend/stg.env
-	${PROJECT_FOLDER}/pm-frontend/docker-build.sh
+	${PROJECT_FOLDER}/pm-frontend/build-docker.sh
 
 stg-pm-backend-build: export VERSION=${PM_STG_VERSION}
 stg-pm-backend-build: export PLATFORM=linux/amd64
 stg-pm-backend-build:
-	${PROJECT_FOLDER}/pm-backend/docker-build.sh
+	${PROJECT_FOLDER}/pm-backend/build-docker.sh
 
 stg-pm-database-build: export VERSION=${PM_STG_VERSION}
 stg-pm-database-build: export PLATFORM=linux/amd64
 stg-pm-database-build:
-	${PROJECT_FOLDER}/pm-database/docker-build.sh
+	${PROJECT_FOLDER}/pm-database/build-docker.sh
 
 stg-build-all: stg-pm-frontend-build stg-pm-backend-build stg-pm-database-build
 
