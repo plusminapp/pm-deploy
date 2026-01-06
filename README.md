@@ -1,6 +1,6 @@
 # `PlusMin`
 
-**Versie**: 12 juni 2025  
+**Versie**: 15 december 2025  
 **Auteur**: Ruud van Vliet
 
 ## Overzicht
