@@ -9,8 +9,8 @@ services:
       - TZ=Europe/Amsterdam
       - VITE_ASGARDEO_CLIENT_ID=ahVUPaBf3D1mE5xrZIM2aAmIRVYa
       - VITE_ASGARDEO_BASE_URL=https://api.eu.asgardeo.io/t/plusmin
-      - VITE_ASGARDEO_SIGNIN_REDIRECT_URL=https://dev.plusminapp.nl
-      - VITE_ASGARDEO_SIGNOUT_REDIRECT_URL=https://dev.plusminapp.nl/login
+      - VITE_ASGARDEO_SIGNIN_REDIRECT_URL=https://dev.plusmin.org
+      - VITE_ASGARDEO_SIGNOUT_REDIRECT_URL=https://dev.plusmin.org/login
     ports:
       - "3035:3035"
     networks:
