@@ -62,7 +62,7 @@ lcl-all: lcl-build-all lcl-deploy-all
 
 # development dev
 dev-pm-frontend-build: export VERSION=${PM_DEV_VERSION}
-dev-pm-frontend-build: export PLATFORM=linux/amd64
+dev-pm-frontend-build: export PLATFORM=linux/arm64
 dev-pm-frontend-build: export PORT=3035
 dev-pm-frontend-build: export STAGE=dev
 dev-pm-frontend-build:
@@ -70,12 +70,12 @@ dev-pm-frontend-build:
 	${PROJECT_FOLDER}/pm-frontend/build-docker.sh
 
 dev-pm-backend-build: export VERSION=${PM_DEV_VERSION}
-dev-pm-backend-build: export PLATFORM=linux/amd64
+dev-pm-backend-build: export PLATFORM=linux/arm64
 dev-pm-backend-build:
 	${PROJECT_FOLDER}/pm-backend/build-docker.sh
 
 dev-pm-database-build: export VERSION=${PM_DEV_VERSION}
-dev-pm-database-build: export PLATFORM=linux/amd64
+dev-pm-database-build: export PLATFORM=linux/arm64
 dev-pm-database-build:
 	${PROJECT_FOLDER}/pm-database/build-docker.sh
 
@@ -91,13 +91,13 @@ dev-copy-all: dev-copy-database dev-copy-frontend dev-copy-backend
 
 dev-deploy-frontend:
 	cat .env dev/dev.env | ssh box 'cat > ~/pm/.env'
-	ssh box 'sudo su -c "cd ~/pm && ~/pm/pm_deploy.sh dev pm-frontend-dev" - ruud'
+	ssh box 'sudo -u ruud bash -lc "cd ~/pm && ~/pm/pm_deploy.sh dev pm-frontend-dev"'
 dev-deploy-backend:
 	cat .env dev/dev.env | ssh box 'cat > ~/pm/.env'
-	ssh box 'sudo su -c "cd ~/pm && ~/pm/pm_deploy.sh dev pm-backend-dev" - ruud'
+	ssh box 'sudo -u ruud bash -lc "cd ~/pm && ~/pm/pm_deploy.sh dev pm-backend-dev"'
 dev-deploy-all:
 	cat .env dev/dev.env | ssh box 'cat > ~/pm/.env'
-	ssh box 'sudo su -c "cd ~/pm && ~/pm/pm_deploy.sh dev" - ruud'
+	ssh box 'sudo -u ruud bash -lc "cd ~/pm && ~/pm/pm_deploy.sh dev"'
 
 dev-frontend: dev-pm-frontend-build dev-copy-frontend dev-deploy-frontend
 dev-backend: dev-pm-backend-build dev-copy-backend dev-deploy-backend
@@ -105,7 +105,7 @@ dev-all: dev-build-all dev-copy-all dev-deploy-all
 
 # staging stg
 stg-pm-frontend-build: export VERSION=${PM_STG_VERSION}
-stg-pm-frontend-build: export PLATFORM=linux/amd64
+stg-pm-frontend-build: export PLATFORM=linux/arm64
 stg-pm-frontend-build: export PORT=3030
 stg-pm-frontend-build: export STAGE=stg
 stg-pm-frontend-build:
@@ -113,12 +113,12 @@ stg-pm-frontend-build:
 	${PROJECT_FOLDER}/pm-frontend/build-docker.sh
 
 stg-pm-backend-build: export VERSION=${PM_STG_VERSION}
-stg-pm-backend-build: export PLATFORM=linux/amd64
+stg-pm-backend-build: export PLATFORM=linux/arm64
 stg-pm-backend-build:
 	${PROJECT_FOLDER}/pm-backend/build-docker.sh
 
 stg-pm-database-build: export VERSION=${PM_STG_VERSION}
-stg-pm-database-build: export PLATFORM=linux/amd64
+stg-pm-database-build: export PLATFORM=linux/arm64
 stg-pm-database-build:
 	${PROJECT_FOLDER}/pm-database/build-docker.sh
 
@@ -134,13 +134,13 @@ stg-copy-all: stg-copy-database stg-copy-frontend stg-copy-backend
 
 stg-deploy-frontend:
 	cat .env stg/stg.env | ssh box 'cat > ~/pm/.env'
-	ssh box 'sudo su -c "cd ~/pm && ~/pm/pm_deploy.sh stg pm-frontend-stg" - ruud'
+	ssh box 'sudo -u ruud bash -lc "cd ~/pm && ~/pm/pm_deploy.sh stg pm-frontend-stg"'
 stg-deploy-backend:
 	cat .env stg/stg.env | ssh box 'cat > ~/pm/.env'
-	ssh box 'sudo su -c "cd ~/pm && ~/pm/pm_deploy.sh stg pm-backend-stg" - ruud'
+	ssh box 'sudo -u ruud bash -lc "cd ~/pm && ~/pm/pm_deploy.sh stg pm-backend-stg"'
 stg-deploy-all:
 	cat .env stg/stg.env | ssh box 'cat > ~/pm/.env'
-	ssh box 'sudo su -c "cd ~/pm && ~/pm/pm_deploy.sh stg" - ruud'
+	ssh box 'sudo -u ruud bash -lc "cd ~/pm && ~/pm/pm_deploy.sh stg"'
 
 stg-frontend: stg-pm-frontend-build stg-copy-frontend stg-deploy-frontend
 stg-backend: stg-pm-backend-build stg-copy-backend stg-deploy-backend
