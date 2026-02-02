@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 DATE="$(date +%F)"
+DATETIME="$(date +'%Y/%m/%d %H:%M:%S')"
 BU_HOME=~/pm/backup
 FILENAME=$BU_HOME/pm-backup`date +%Y%m%d"-"%H%M%S`.sql
 DOW=$(date +%u)
@@ -26,13 +27,13 @@ if [ "$FAILED" = false ]; then
   if [ $DOW -eq 1 ]; then
     printf "To: $recipients\nFrom: ruud@vliet.io\nSubject: GEEN ERRORs bij backup: wekelijkse rapportage van de pm-backend backup check op $DATE\n\nGeen ERRORs in de backup\n" >$BU_HOME/bu-mail.txt
     ssmtp $recipients < $BU_HOME/bu-mail.txt
-    echo "Mail verzonden naar $recipients..." >> $BU_HOME/pm_backup.log
+    printf "%s Mail verzonden naar %s...\n\n\n" "$DATETIME" "$recipients" >> "$BU_HOME/pm_backup.log"
   else
-    echo "GEEN mail verzonden naar $recipients..." >> $BU_HOME/pm_backup.log
+    printf "%s GEEN mail verzonden naar %s...\n\n\n" "$DATETIME" "$recipients" >> "$BU_HOME/pm_backup.log"
   fi
 else
   printf "To: $recipients\nFrom: ruud@vliet.io\nSubject: ERRORs in de pm-backend backup op $DATE\n\n" >$BU_HOME/bu-mail.txt
   cat $BU_HOME/pm_backup.log >> $BU_HOME/bu-mail.txt
   ssmtp $recipients < $BU_HOME/bu-mail.txt
-  echo "Mail verzonden naar $recipients..." >> $BU_HOME/pm_backup.log
+  printf "%s Mail verzonden naar %s...\n\n\n" "$DATETIME" "$recipients" >> "$BU_HOME/pm_backup.log"
 fi
