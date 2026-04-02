@@ -2,7 +2,7 @@
 
 DATE="$(date +%F)"
 DATETIME="$(date +'%Y/%m/%d %H:%M:%S')"
-BU_HOME=~/pm/backup
+BU_HOME=~/io.vliet/pm/backup
 FILENAME=$BU_HOME/pm-backup`date +%Y%m%d"-"%H%M%S`.sql
 DOW=$(date +%u)
 recipients="ruud@vliet.io"
