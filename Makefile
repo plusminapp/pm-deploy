@@ -16,7 +16,6 @@ lcl-pm-frontend-build: export STAGE=lcl
 lcl-pm-frontend-build:
 	echo folder: ${PROJECT_FOLDER} platform: ${LCL_PLATFORM} version: ${VERSION}
 	cp lcl/lcl.env ${PROJECT_FOLDER}/pm-frontend/lcl.env
-	${PROJECT_FOLDER}/pm-frontend/build-budgetscanner-pdf.sh
 	${PROJECT_FOLDER}/pm-frontend/build-docker.sh
 
 lcl-pm-backend-build: export VERSION=${PM_LCL_VERSION}
