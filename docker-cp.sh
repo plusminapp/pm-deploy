@@ -17,6 +17,6 @@ fi
 echo version: $VERSION
 
 docker save -o .images/pm-$1.${VERSION}.tar plusmin/pm-$1:${VERSION}
-scp .images/pm-$1.${VERSION}.tar box:~/io.vliet/pm/.images/
-ssh box "bash -lc 'docker load -i ~/io.vliet/pm/.images/pm-$1.${VERSION}.tar'"
+scp .images/pm-$1.${VERSION}.tar boxmf:~/io.vliet/pm/.images/
+ssh boxmf "bash -lc 'docker load -i ~/io.vliet/pm/.images/pm-$1.${VERSION}.tar'"
 

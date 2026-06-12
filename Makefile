@@ -6,7 +6,7 @@ include dev/dev.env
 include stg/stg.env
 export
 
-export LCL_PLATFORM=linux/$(shell uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')
+export LCL_PLATFORM=linux/$(shell uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/amd64/')
 
 # local lcl
 lcl-pm-frontend-build: export VERSION=${PM_LCL_VERSION}
@@ -62,7 +62,7 @@ lcl-all: lcl-build-all lcl-deploy-all
 
 # development dev
 dev-pm-frontend-build: export VERSION=${PM_DEV_VERSION}
-dev-pm-frontend-build: export PLATFORM=linux/arm64
+dev-pm-frontend-build: export PLATFORM=linux/amd64
 dev-pm-frontend-build: export PORT=3035
 dev-pm-frontend-build: export STAGE=dev
 dev-pm-frontend-build:
@@ -70,12 +70,12 @@ dev-pm-frontend-build:
 	${PROJECT_FOLDER}/pm-frontend/build-docker.sh
 
 dev-pm-backend-build: export VERSION=${PM_DEV_VERSION}
-dev-pm-backend-build: export PLATFORM=linux/arm64
+dev-pm-backend-build: export PLATFORM=linux/amd64
 dev-pm-backend-build:
 	${PROJECT_FOLDER}/pm-backend/build-docker.sh
 
 dev-pm-database-build: export VERSION=${PM_DEV_VERSION}
-dev-pm-database-build: export PLATFORM=linux/arm64
+dev-pm-database-build: export PLATFORM=linux/amd64
 dev-pm-database-build:
 	${PROJECT_FOLDER}/pm-database/build-docker.sh
 
@@ -90,14 +90,14 @@ dev-copy-backend:
 dev-copy-all: dev-copy-database dev-copy-frontend dev-copy-backend
 
 dev-deploy-frontend:
-	cat .env dev/dev.env | ssh box 'cat > ~/io.vliet/pm/.env'
-	ssh box 'sudo -u ruud bash -lc "cd ~/io.vliet/pm && ~/io.vliet/pm/pm_deploy.sh dev pm-frontend-dev"'
+	cat .env dev/dev.env | ssh boxmf 'cat > ~/io.vliet/pm/.env'
+	ssh boxmf 'sudo -u ruud bash -lc "cd ~/io.vliet/pm && ~/io.vliet/pm/pm_deploy.sh dev pm-frontend-dev"'
 dev-deploy-backend:
-	cat .env dev/dev.env | ssh box 'cat > ~/io.vliet/pm/.env'
-	ssh box 'sudo -u ruud bash -lc "cd ~/io.vliet/pm && ~/io.vliet/pm/pm_deploy.sh dev pm-backend-dev"'
+	cat .env dev/dev.env | ssh boxmf 'cat > ~/io.vliet/pm/.env'
+	ssh boxmf 'sudo -u ruud bash -lc "cd ~/io.vliet/pm && ~/io.vliet/pm/pm_deploy.sh dev pm-backend-dev"'
 dev-deploy-all:
-	cat .env dev/dev.env | ssh box 'cat > ~/io.vliet/pm/.env'
-	ssh box 'sudo -u ruud bash -lc "cd ~/io.vliet/pm && ~/io.vliet/pm/pm_deploy.sh dev"'
+	cat .env dev/dev.env | ssh boxmf 'cat > ~/io.vliet/pm/.env'
+	ssh boxmf 'sudo -u ruud bash -lc "cd ~/io.vliet/pm && ~/io.vliet/pm/pm_deploy.sh dev"'
 
 dev-frontend: dev-pm-frontend-build dev-copy-frontend dev-deploy-frontend
 dev-backend: dev-pm-backend-build dev-copy-backend dev-deploy-backend
@@ -105,7 +105,7 @@ dev-all: dev-build-all dev-copy-all dev-deploy-all
 
 # staging stg
 stg-pm-frontend-build: export VERSION=${PM_STG_VERSION}
-stg-pm-frontend-build: export PLATFORM=linux/arm64
+stg-pm-frontend-build: export PLATFORM=linux/amd64
 stg-pm-frontend-build: export PORT=3030
 stg-pm-frontend-build: export STAGE=stg
 stg-pm-frontend-build:
@@ -113,12 +113,12 @@ stg-pm-frontend-build:
 	${PROJECT_FOLDER}/pm-frontend/build-docker.sh
 
 stg-pm-backend-build: export VERSION=${PM_STG_VERSION}
-stg-pm-backend-build: export PLATFORM=linux/arm64
+stg-pm-backend-build: export PLATFORM=linux/amd64
 stg-pm-backend-build:
 	${PROJECT_FOLDER}/pm-backend/build-docker.sh
 
 stg-pm-database-build: export VERSION=${PM_STG_VERSION}
-stg-pm-database-build: export PLATFORM=linux/arm64
+stg-pm-database-build: export PLATFORM=linux/amd64
 stg-pm-database-build:
 	${PROJECT_FOLDER}/pm-database/build-docker.sh
 
@@ -133,14 +133,14 @@ stg-copy-backend:
 stg-copy-all: stg-copy-database stg-copy-frontend stg-copy-backend
 
 stg-deploy-frontend:
-	cat .env stg/stg.env | ssh box 'cat > ~/io.vliet/pm/.env'
-	ssh box 'sudo -u ruud bash -lc "cd ~/io.vliet/pm && ~/io.vliet/pm/pm_deploy.sh stg pm-frontend-stg"'
+	cat .env stg/stg.env | ssh boxmf 'cat > ~/io.vliet/pm/.env'
+	ssh boxmf 'sudo -u ruud bash -lc "cd ~/io.vliet/pm && ~/io.vliet/pm/pm_deploy.sh stg pm-frontend-stg"'
 stg-deploy-backend:
-	cat .env stg/stg.env | ssh box 'cat > ~/io.vliet/pm/.env'
-	ssh box 'sudo -u ruud bash -lc "cd ~/io.vliet/pm && ~/io.vliet/pm/pm_deploy.sh stg pm-backend-stg"'
+	cat .env stg/stg.env | ssh boxmf 'cat > ~/io.vliet/pm/.env'
+	ssh boxmf 'sudo -u ruud bash -lc "cd ~/io.vliet/pm && ~/io.vliet/pm/pm_deploy.sh stg pm-backend-stg"'
 stg-deploy-all:
-	cat .env stg/stg.env | ssh box 'cat > ~/io.vliet/pm/.env'
-	ssh box 'sudo -u ruud bash -lc "cd ~/io.vliet/pm && ~/io.vliet/pm/pm_deploy.sh stg"'
+	cat .env stg/stg.env | ssh boxmf 'cat > ~/io.vliet/pm/.env'
+	ssh boxmf 'sudo -u ruud bash -lc "cd ~/io.vliet/pm && ~/io.vliet/pm/pm_deploy.sh stg"'
 
 stg-frontend: stg-pm-frontend-build stg-copy-frontend stg-deploy-frontend
 stg-backend: stg-pm-backend-build stg-copy-backend stg-deploy-backend
@@ -149,6 +149,6 @@ stg-all: stg-build-all stg-copy-all stg-deploy-all
 # remote
 .PHONY: dev-remote stg-remote
 dev-remote:
-	scp dev/* box:~/io.vliet/pm/
+	scp dev/* boxmf:~/io.vliet/pm/
 stg-remote:
-	scp stg/* box:~/io.vliet/pm/
+	scp stg/* boxmf:~/io.vliet/pm/
